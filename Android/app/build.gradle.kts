@@ -1,14 +1,16 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "hcilab.standardlee.VibrationDetector"
+    namespace = "hcilab.standardlee.vibrationDetector"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "hcilab.standardlee.VibrationDetector"
+        applicationId = "hcilab.standardlee.vibrationDetector"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
@@ -18,6 +20,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "INFERENCE_SERVICE_UUID", getProperty("INFERENCE_SERVICE_UUID"))
+        buildConfigField("String", "RESULT_CHARACTERISTIC_UUID", getProperty("RESULT_CHARACTERISTIC_UUID"))
+        buildConfigField("String", "LOCAL_NAME", getProperty("LOCAL_NAME"))
     }
 
     buildTypes {
@@ -38,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -47,6 +53,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+fun getProperty(propertyKey:String):String{
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {

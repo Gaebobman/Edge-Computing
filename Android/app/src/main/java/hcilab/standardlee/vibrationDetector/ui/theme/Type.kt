@@ -1,4 +1,4 @@
-package hcilab.standardlee.VibrationDetector.ui.theme
+package hcilab.standardlee.vibrationDetector.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
