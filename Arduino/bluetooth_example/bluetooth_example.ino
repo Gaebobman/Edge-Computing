@@ -4,7 +4,7 @@
 // User defined Service UUID
 BLEService myService(SERVICE_UUID);
 // User defined characteristic
-BLEStringCharacteristic myCharacteristic(CHARACTERISTIC_UUID, BLERead | BLEWrite, 30);
+BLEStringCharacteristic myCharacteristic(CHARACTERISTIC_UUID, BLERead | BLEWrite | BLENotify, 30);
 
 void setup() {
   Serial.begin(115200);
@@ -35,10 +35,10 @@ void loop() {
     
     while (central.connected()) {
       if (toggle) {
-        // myCharacteristic.writeValue("Hello");
+        myCharacteristic.writeValue("Hello");
         Serial.println("Sent 'Hello'");
       } else {
-        // myCharacteristic.writeValue("Bye");
+        myCharacteristic.writeValue("Bye");
         Serial.println("Sent 'Bye'");
       }
       toggle = !toggle;
