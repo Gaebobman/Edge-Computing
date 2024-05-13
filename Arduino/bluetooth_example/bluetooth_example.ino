@@ -22,7 +22,6 @@ void setup() {
   BLE.addService(myService);
 
   myCharacteristic.writeValue("Hello");
-
   BLE.advertise();
   Serial.println("Bluetooth device active, waiting for connections...");
 }
@@ -36,10 +35,10 @@ void loop() {
     
     while (central.connected()) {
       if (toggle) {
-        myCharacteristic.writeValue("Hello");
+        // myCharacteristic.writeValue("Hello");
         Serial.println("Sent 'Hello'");
       } else {
-        myCharacteristic.writeValue("Bye");
+        // myCharacteristic.writeValue("Bye");
         Serial.println("Sent 'Bye'");
       }
       toggle = !toggle;
