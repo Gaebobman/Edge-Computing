@@ -1,4 +1,4 @@
-package hcilab.standardlee.VibrationDetector.ui.theme
+package hcilab.standardlee.vibrationDetector.ui.theme
 
 import android.app.Activity
 import android.os.Build

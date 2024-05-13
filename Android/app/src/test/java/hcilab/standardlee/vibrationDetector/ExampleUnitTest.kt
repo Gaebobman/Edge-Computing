@@ -1,4 +1,4 @@
-package hcilab.standardlee.VibrationDetector
+package hcilab.standardlee.vibrationDetector
 
 import org.junit.Test
 
