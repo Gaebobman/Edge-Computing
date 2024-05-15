@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import hcilab.standardlee.vibrationDetector.BuildConfig
 import hcilab.standardlee.vibrationDetector.ble.INFERENCE_SERVICE_UUID
 
 @Composable
@@ -22,12 +21,10 @@ fun DeviceScreen(
     unselectDevice: () -> Unit,
     isDeviceConnected: Boolean,
     discoveredCharacteristics: Map<String, List<String>>,
-    password: String?,
-    nameWrittenTimes: Int,
+    inferenceResult: String?,
     connect: () -> Unit,
     discoverServices: () -> Unit,
-    readPassword: () -> Unit,
-    writeName: () -> Unit
+    resultRead: () -> Unit
 ) {
 
     val foundTargetService = discoveredCharacteristics.contains(INFERENCE_SERVICE_UUID.toString())
@@ -52,17 +49,11 @@ fun DeviceScreen(
                 }
             }
         }
-        Button(onClick = readPassword, enabled = isDeviceConnected && foundTargetService) {
-            Text("3. Read Password")
+        Button(onClick = resultRead, enabled = isDeviceConnected && foundTargetService) {
+            Text("3. Read Inference Result")
         }
-        if (password != null) {
-            Text("Found password: $password")
-        }
-        Button(onClick = writeName, enabled = isDeviceConnected && foundTargetService) {
-            Text("4. Write Your Name")
-        }
-        if (nameWrittenTimes > 0) {
-            Text("Successful writes: $nameWrittenTimes")
+        if (inferenceResult != null) {
+            Text("Read Inference Result: $inferenceResult")
         }
 
         OutlinedButton(modifier = Modifier.padding(top = 40.dp),  onClick = unselectDevice) {

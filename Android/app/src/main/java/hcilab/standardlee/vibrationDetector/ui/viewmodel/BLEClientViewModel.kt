@@ -1,4 +1,4 @@
-package hcilab.standardlee.vibrationDetector.ui
+package hcilab.standardlee.vibrationDetector.ui.viewmodel
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -32,8 +32,8 @@ class BLEClientViewModel(private val application: Application): AndroidViewModel
     private val activeDeviceServices = activeConnection.flatMapLatest {
         it?.services ?: flowOf(emptyList())
     }
-    private val activeDevicePassword = activeConnection.flatMapLatest {
-        it?.passwordRead ?: flowOf(null)
+    private val activeInferenceResult = activeConnection.flatMapLatest {
+        it?.resultRead ?: flowOf(null)
     }
     private val activeDeviceNameWrittenTimes = activeConnection.flatMapLatest {
         it?.successfulNameWrites ?: flowOf(0)
@@ -44,14 +44,12 @@ class BLEClientViewModel(private val application: Application): AndroidViewModel
         _uiState,
         isDeviceConnected,
         activeDeviceServices,
-        activeDevicePassword,
-        activeDeviceNameWrittenTimes
-    ) { state, isDeviceConnected, services, password, nameWrittenTimes ->
+        activeInferenceResult
+    ) { state, isDeviceConnected, services, inferenceResult ->
         state.copy(
             isDeviceConnected = isDeviceConnected,
             discoveredCharacteristics = services.associate { service -> Pair(service.uuid.toString(), service.characteristics.map { it.uuid.toString() }) },
-            password = password,
-            nameWrittenTimes = nameWrittenTimes
+            inferenceResult = inferenceResult,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), BLEClientUIState())
 
@@ -101,14 +99,14 @@ class BLEClientViewModel(private val application: Application): AndroidViewModel
     }
 
     @RequiresPermission(PERMISSION_BLUETOOTH_CONNECT)
-    fun readPasswordFromActiveDevice() {
-        activeConnection.value?.readPassword()
+    fun readInferenceResultFromActiveDevice() {
+        activeConnection.value?.readResult()
     }
 
-    @RequiresPermission(PERMISSION_BLUETOOTH_CONNECT)
-    fun writeNameToActiveDevice() {
-        activeConnection.value?.writeName()
-    }
+//    @RequiresPermission(PERMISSION_BLUETOOTH_CONNECT)
+//    fun writeNameToActiveDevice() {
+//        activeConnection.value?.writeName()
+//    }
 
     override fun onCleared() {
         super.onCleared()
@@ -132,6 +130,5 @@ data class BLEClientUIState(
     val activeDevice: BluetoothDevice? = null,
     val isDeviceConnected: Boolean = false,
     val discoveredCharacteristics: Map<String, List<String>> = emptyMap(),
-    val password: String? = null,
-    val nameWrittenTimes: Int = 0
+    val inferenceResult: String? = null,
 )

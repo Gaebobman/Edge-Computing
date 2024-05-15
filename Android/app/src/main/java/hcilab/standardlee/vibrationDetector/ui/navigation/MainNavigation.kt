@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import hcilab.standardlee.vibrationDetector.ui.BLEClientViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import hcilab.standardlee.vibrationDetector.ui.viewmodel.BLEClientViewModel
 import hcilab.standardlee.vibrationDetector.ui.screens.DeviceScreen
 import hcilab.standardlee.vibrationDetector.ui.screens.PermissionsRequiredScreen
 import hcilab.standardlee.vibrationDetector.ui.screens.ScanningScreen
@@ -45,12 +47,10 @@ fun MainNavigation(viewModel: BLEClientViewModel = viewModel()) {
             },
             isDeviceConnected = uiState.isDeviceConnected,
             discoveredCharacteristics = uiState.discoveredCharacteristics,
-            password = uiState.password,
-            nameWrittenTimes = uiState.nameWrittenTimes,
+            inferenceResult = uiState.inferenceResult,
             connect = viewModel::connectActiveDevice,
             discoverServices = viewModel::discoverActiveDeviceServices,
-            readPassword = viewModel::readPasswordFromActiveDevice,
-            writeName = viewModel::writeNameToActiveDevice
+            resultRead = viewModel::readInferenceResultFromActiveDevice
         )
     }
 }
