@@ -25,7 +25,7 @@ class ConnectBLE  @RequiresPermission("PERMISSION_BLUETOOTH_CONNECT") constructo
 ) {
     val isConnected = MutableStateFlow(false)
     val resultRead = MutableStateFlow<String?>(null)
-    val successfulNameWrites = MutableStateFlow(0)
+//    val successfulNameWrites = MutableStateFlow(0)
     val services = MutableStateFlow<List<BluetoothGattService>>(emptyList())
 
 
@@ -88,6 +88,7 @@ class ConnectBLE  @RequiresPermission("PERMISSION_BLUETOOTH_CONNECT") constructo
     fun discoverServices() {
         gatt?.discoverServices()
     }
+
 
     @RequiresPermission(PERMISSION_BLUETOOTH_CONNECT)
     fun readResult() {

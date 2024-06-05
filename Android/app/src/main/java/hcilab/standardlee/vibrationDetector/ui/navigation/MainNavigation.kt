@@ -50,7 +50,7 @@ fun MainNavigation(viewModel: BLEClientViewModel = viewModel()) {
             inferenceResult = uiState.inferenceResult,
             connect = viewModel::connectActiveDevice,
             discoverServices = viewModel::discoverActiveDeviceServices,
-            resultRead = viewModel::readInferenceResultFromActiveDevice
+            resultRead = viewModel::readInferenceResultFromActiveDevice     // Result of the Communication
         )
     }
 }

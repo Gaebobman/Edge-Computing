@@ -35,9 +35,7 @@ class BLEClientViewModel(private val application: Application): AndroidViewModel
     private val activeInferenceResult = activeConnection.flatMapLatest {
         it?.resultRead ?: flowOf(null)
     }
-    private val activeDeviceNameWrittenTimes = activeConnection.flatMapLatest {
-        it?.successfulNameWrites ?: flowOf(0)
-    }
+
 
     private val _uiState = MutableStateFlow(BLEClientUIState())
     val uiState = combine(
